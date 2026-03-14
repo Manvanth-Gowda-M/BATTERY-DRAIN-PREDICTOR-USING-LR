@@ -49,6 +49,7 @@ To function correctly securely, the app requires the following permissions upon 
 *   **AndroidX** - Core libraries for UI and lifecycle management.
 *   **Material Components** - UI components for a modern, attractive Material Design layout.
 *   **Scikit-Learn (Python)** - Used to train the underlying Linear Regression predictive model.
+*   This is purely made for College Project not a perfect app 
 
 ## 🤝 Contributing
 
