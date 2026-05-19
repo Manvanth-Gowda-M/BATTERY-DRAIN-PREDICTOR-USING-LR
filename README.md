@@ -53,4 +53,4 @@ To function correctly securely, the app requires the following permissions upon 
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](https://github.com/Manvanth-Gowda-M/BATTERY-DRAIN-PREDICTOR-USING-LR/issues) if you want to contribute.
+Feel free to check the [issues page](https://github.com/Manvanth-Gowda-M/BATTERY-DRAIN-PREDICTOR-USING-LR/issues) if you want to contribute. made of ML h
