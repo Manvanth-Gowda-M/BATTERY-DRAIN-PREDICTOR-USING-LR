@@ -281,25 +281,28 @@ class MainActivity : AppCompatActivity() {
             val defaultBehaviorClass = 3.0 // Using moderate behavior by default
             val osIsIos = 0.0 // Android app, so this is always 0.0
 
-            val predictedDailyDrainMAh = predictDrain(
-                appUsage = fetchedAppUsage,
-                screenTime = fetchedScreenTime,
-                numApps = fetchedNumApps,
-                dataUsage = fetchedDataUsage,
-                age = age,
-                behaviorClass = defaultBehaviorClass,
-                genderIsMale = genderIsMale,
-                osIsIos = osIsIos
+            val predictedDailyDrainMAh = BatteryDrainPredictor.predictDailyDrainMAh(
+                BatteryDrainPredictor.PredictionInput(
+                    appUsageMinutes = fetchedAppUsage,
+                    screenTimeHours = fetchedScreenTime,
+                    numApps = fetchedNumApps,
+                    dataUsageMb = fetchedDataUsage,
+                    age = age,
+                    behaviorClass = defaultBehaviorClass,
+                    genderIsMale = genderIsMale,
+                    osIsIos = osIsIos
+                )
             )
 
             tvDailyDrain.text = "Predicted Drain: %.0f mAh/day".format(predictedDailyDrainMAh)
 
             // Calculate Remaining Time
             // Formula: (Current_Battery_Capacity / Drain_Per_Hour)
-            val currentCapacityMAh = DEFAULT_BATTERY_CAPACITY_MAH * currentBatteryPct
-            val drainPerHourMAh = predictedDailyDrainMAh / 24.0
-            
-            val hoursRemaining = if (drainPerHourMAh > 0) currentCapacityMAh / drainPerHourMAh else 0.0
+            val hoursRemaining = BatteryDrainPredictor.estimateRemainingHours(
+                batteryPercentage = currentBatteryPct,
+                predictedDailyDrainMAh = predictedDailyDrainMAh,
+                batteryCapacityMAh = DEFAULT_BATTERY_CAPACITY_MAH
+            )
             
             if (hoursRemaining > 0 && hoursRemaining < 100) { // arbitrary cap to avoid layout break
                 val hours = hoursRemaining.toInt()
@@ -388,34 +391,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun predictDrain(
-        appUsage: Double,
-        screenTime: Double,
-        numApps: Double,
-        dataUsage: Double,
-        age: Double,
-        behaviorClass: Double,
-        genderIsMale: Double,
-        osIsIos: Double
-    ): Double {
-        val intercept = -112.1245825400506
-        val bAppUsage = 0.4728849997647
-        val bScreenTime = 13.911041935832795
-        val bNumApps = 1.353342790122157
-        val bDataUsage = 0.02938806991774966
-        val bAge = -0.21161813843346342
-        val bBehaviorClass = 471.19718393690164
-        val bGenderMale = 3.586155014525511
-        val bOsIos = 7.853044095674283
-
-        return intercept +
-               (bAppUsage * appUsage) +
-               (bScreenTime * screenTime) +
-               (bNumApps * numApps) +
-               (bDataUsage * dataUsage) +
-               (bAge * age) +
-               (bBehaviorClass * behaviorClass) +
-               (bGenderMale * genderIsMale) +
-               (bOsIos * osIsIos)
-    }
 }

@@ -37,6 +37,21 @@ An intelligent Android application that predicts your device's daily battery dra
 4.  Connect your Android device (with USB debugging enabled) or start an emulator.
 5.  Click the **Run** button to build and install the app.
 
+### Local Validation Commands
+
+From the repository root:
+
+```bash
+chmod +x gradlew
+./gradlew test
+```
+
+To build APK artifacts from Android Studio/CLI:
+
+```bash
+./gradlew assembleDebug
+```
+
 ### Permissions Required
 
 To function correctly securely, the app requires the following permissions upon first launch:
@@ -53,4 +68,4 @@ To function correctly securely, the app requires the following permissions upon 
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](https://github.com/Manvanth-Gowda-M/BATTERY-DRAIN-PREDICTOR-USING-LR/issues) if you want to contribute. made of ML h
+Feel free to check the [issues page](https://github.com/Manvanth-Gowda-M/BATTERY-DRAIN-PREDICTOR-USING-LR/issues) if you want to contribute.
